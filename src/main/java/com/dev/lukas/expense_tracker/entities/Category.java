@@ -1,22 +1,29 @@
 package com.dev.lukas.expense_tracker.entities;
 
+import java.io.Serializable;
+import java.util.List;
+
 import jakarta.persistence.*;
 
 @Entity
 @Table(name = "categories")
-public class Category {
+public class Category implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     @Column(nullable = false, unique = true)
     private String name;
 
-    public Category(){
+    @OneToMany(mappedBy = "category", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Expense> expenses;
+
+    public Category() {
 
     }
 
-    public Category(Long id, String name){
+    public Category(Long id, String name) {
         this.id = id;
         this.name = name;
     }
@@ -29,7 +36,7 @@ public class Category {
         this.id = id;
     }
 
-    public String getName(){
+    public String getName() {
         return name;
     }
 
@@ -37,15 +44,4 @@ public class Category {
         this.name = name;
     }
 
-    @Override
-    public final boolean equals(Object o) {
-        if (!(o instanceof Category category)) return false;
-
-        return id.equals(category.id);
-    }
-
-    @Override
-    public int hashCode() {
-        return id.hashCode();
-    }
 }
