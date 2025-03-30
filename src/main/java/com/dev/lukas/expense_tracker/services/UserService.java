@@ -14,19 +14,38 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;
 
-    public List<User> findAll(){
+    public List<User> findAll() {
         return userRepository.findAll();
     }
 
-    public Optional<User> findById(Long id){
+    public Optional<User> findById(Long id) {
         return userRepository.findById(id);
     }
 
-    public User insertUser(User user){
+    public User insertUser(User user) {
         return userRepository.save(user);
     }
 
-    public void deleteUser(Long id){
-        userRepository.deleteById(id);
+    public User updateUser(Long id, User userDetails) {
+        Optional<User> existingUserOpt = userRepository.findById(id);
+        if (existingUserOpt.isPresent()) {
+            User existingUser = existingUserOpt.get();
+
+            existingUser.setUsername(userDetails.getUsername());
+            existingUser.setEmail(userDetails.getEmail());
+
+            return userRepository.save(existingUser);
+        }
+        // later i will make a custom exception to throw instead return null
+        return null;
+    }
+
+    public void deleteUser(Long id) {
+        Optional<User> existingUserOpt = userRepository.findById(id);
+        if(existingUserOpt.isPresent()){
+            userRepository.deleteById(id);
+        } else {
+            throw new RuntimeException("User not found with ID: " + id);
+        }
     }
 }

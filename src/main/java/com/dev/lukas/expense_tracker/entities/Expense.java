@@ -17,7 +17,7 @@ import jakarta.persistence.Table;
 @Entity
 @Table(name = "expenses")
 public class Expense implements Serializable {
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -29,12 +29,13 @@ public class Expense implements Serializable {
     private BigDecimal value;
 
     @ManyToOne
-    @JoinColumn(name = "category_id", nullable = false)    
+    @JoinColumn(name = "category_id", nullable = false)
     private Category category;
 
-    public Expense(){
+    public Expense() {
 
     }
+
     public Expense(Long id, String description, BigDecimal value, Category category) {
         this.id = id;
         this.description = description;
@@ -73,9 +74,5 @@ public class Expense implements Serializable {
     public void setCategory(Category category) {
         this.category = category;
     }
-    
-    
 
-
-    
 }
