@@ -1,4 +1,4 @@
-package com.dev.lukas.expense_tracker.entities;
+package com.dev.lukas.expense_tracker.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -9,7 +9,7 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "users")
-public class User implements Serializable {
+public class User {
 
     @Id
     @GeneratedValue( strategy =  GenerationType.IDENTITY)

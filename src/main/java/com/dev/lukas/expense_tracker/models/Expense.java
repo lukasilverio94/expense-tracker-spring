@@ -1,9 +1,8 @@
-package com.dev.lukas.expense_tracker.entities;
+package com.dev.lukas.expense_tracker.models;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
 
-import org.antlr.v4.runtime.misc.NotNull;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -16,13 +15,13 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "expenses")
-public class Expense implements Serializable {
+public class Expense {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
+    @Column(nullable = false)   
     private String description;
 
     @Column(nullable = false)

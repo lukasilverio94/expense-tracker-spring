@@ -1,4 +1,4 @@
-package com.dev.lukas.expense_tracker.entities;
+package com.dev.lukas.expense_tracker.models;
 
 import java.io.Serializable;
 import java.util.List;
@@ -7,7 +7,16 @@ import jakarta.persistence.*;
 
 @Entity
 @Table(name = "categories")
-public class Category implements Serializable {
+public class Category {
+
+    public Category() {
+
+    }
+
+    public Category(Long id, String name) {
+        this.id = id;
+        this.name = name;
+    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -19,14 +28,6 @@ public class Category implements Serializable {
     @OneToMany(mappedBy = "category", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Expense> expenses;
 
-    public Category() {
-
-    }
-
-    public Category(Long id, String name) {
-        this.id = id;
-        this.name = name;
-    }
 
     public Long getId() {
         return id;
