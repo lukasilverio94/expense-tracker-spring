@@ -1,6 +1,6 @@
 package com.dev.lukas.expense_tracker.controllers;
 
-import com.dev.lukas.expense_tracker.entities.User;
+import com.dev.lukas.expense_tracker.models.User;
 import com.dev.lukas.expense_tracker.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

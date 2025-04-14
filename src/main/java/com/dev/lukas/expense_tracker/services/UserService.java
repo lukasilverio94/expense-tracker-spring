@@ -1,7 +1,8 @@
 package com.dev.lukas.expense_tracker.services;
 
-import com.dev.lukas.expense_tracker.entities.User;
+import com.dev.lukas.expense_tracker.models.User;
 import com.dev.lukas.expense_tracker.repositories.UserRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -9,9 +10,9 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor
 public class UserService {
 
-    @Autowired
     private UserRepository userRepository;
 
     public List<User> findAll() {

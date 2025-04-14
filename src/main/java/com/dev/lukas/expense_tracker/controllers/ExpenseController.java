@@ -1,43 +1,77 @@
 package com.dev.lukas.expense_tracker.controllers;
 
-import java.util.List;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
-import com.dev.lukas.expense_tracker.entities.Expense;
+import com.dev.lukas.expense_tracker.controllers.mappers.ExpenseMapper;
+import com.dev.lukas.expense_tracker.dtos.GetExpenseDTO;
+import com.dev.lukas.expense_tracker.dtos.InsertExpenseDTO;
+import com.dev.lukas.expense_tracker.models.Expense;
+import com.dev.lukas.expense_tracker.repositories.CategoryRepository;
 import com.dev.lukas.expense_tracker.services.ExpenseService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.net.URI;
+import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping(value = "/expenses")
-public class ExpenseController {
+@RequiredArgsConstructor
+public class ExpenseController implements GenericController {
 
-    @Autowired
-    private ExpenseService expenseService;
+    private final ExpenseService expenseService;
+    private final ExpenseMapper mapper;
+    private final CategoryRepository categoryRepository;
 
-    @GetMapping
-    public ResponseEntity<List<Expense>> listAll() {
-        List<Expense> expenses = expenseService.findAll();
-        return ResponseEntity.ok().body(expenses);
+
+    @PostMapping
+    public ResponseEntity<Void> insertExpense(@RequestBody @Valid InsertExpenseDTO dto) {
+        Expense expense = mapper.toExpense(dto);
+        expenseService.save(expense);
+        URI locationUrlHeader = generateLocationHeader(expense.getId());
+        return ResponseEntity.created(locationUrlHeader).build();
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Expense> findById(@PathVariable Long id){
+    public ResponseEntity<GetExpenseDTO> findById(@PathVariable Long id) {
         return expenseService.findById(id)
-        .map(ResponseEntity::ok)
-        .orElse(ResponseEntity.notFound().build());
+                .map(mapper::toGetExpenseDTO)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
     }
 
-    @PostMapping("/{categoryId}")
-    public ResponseEntity<Expense> insert(@PathVariable Long categoryId, @RequestBody Expense expense) {
-        Expense newExpense = expenseService.insertWithCategory(categoryId, expense);
-        return ResponseEntity.ok(newExpense);
+    @GetMapping
+    public ResponseEntity<List<GetExpenseDTO>> findAll() {
+        List<GetExpenseDTO> expenses = expenseService.findAll()
+                .stream()
+                .map(mapper::toGetExpenseDTO)
+                .toList();
+        return ResponseEntity.ok().body(expenses);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
+        System.out.println();
+        Optional<Expense> expenseOptional = expenseService.findById(id);
+        if (expenseOptional.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+
+        expenseService.delete(expenseOptional.get().getId());
+        return ResponseEntity.noContent().build();
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Void> update(@PathVariable Long id, @RequestBody @Valid InsertExpenseDTO dto) {
+        expenseService.update(id, dto);
+        return ResponseEntity.noContent().build();
+    }
+
+    @DeleteMapping
+    public ResponseEntity<Void> deleteAll(){
+        expenseService.deleteAll();
+        return ResponseEntity.noContent().build();
     }
 
 }
