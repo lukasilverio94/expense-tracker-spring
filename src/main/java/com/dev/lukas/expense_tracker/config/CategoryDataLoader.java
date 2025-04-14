@@ -1,6 +1,6 @@
 package com.dev.lukas.expense_tracker.config;
 
-import com.dev.lukas.expense_tracker.entities.Category;
+import com.dev.lukas.expense_tracker.models.Category;
 import com.dev.lukas.expense_tracker.repositories.CategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
