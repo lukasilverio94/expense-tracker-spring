@@ -3,7 +3,7 @@ package com.dev.lukas.expense_tracker.services;
 import java.util.List;
 import java.util.Optional;
 
-import com.dev.lukas.expense_tracker.dtos.InsertExpenseDTO;
+import com.dev.lukas.expense_tracker.dtos.ExpenseRequestDTO;
 import com.dev.lukas.expense_tracker.models.Category;
 import com.dev.lukas.expense_tracker.repositories.CategoryRepository;
 import lombok.RequiredArgsConstructor;
@@ -38,7 +38,7 @@ public class ExpenseService {
         return expenseRepository.save(expense);
     }
 
-    public Expense update(Long id, InsertExpenseDTO dto) {
+    public Expense update(Long id, ExpenseRequestDTO dto) {
         Expense existingExpense = expenseRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Expense with ID " + id + " not found"));
 

@@ -1,8 +1,8 @@
 package com.dev.lukas.expense_tracker.controllers;
 
 import com.dev.lukas.expense_tracker.controllers.mappers.ExpenseMapper;
-import com.dev.lukas.expense_tracker.dtos.GetExpenseDTO;
-import com.dev.lukas.expense_tracker.dtos.InsertExpenseDTO;
+import com.dev.lukas.expense_tracker.dtos.ExpenseRequestDTO;
+import com.dev.lukas.expense_tracker.dtos.ExpenseResponseDTO;
 import com.dev.lukas.expense_tracker.models.Expense;
 import com.dev.lukas.expense_tracker.repositories.CategoryRepository;
 import com.dev.lukas.expense_tracker.services.ExpenseService;
@@ -26,7 +26,7 @@ public class ExpenseController implements GenericController {
 
 
     @PostMapping
-    public ResponseEntity<Void> insertExpense(@RequestBody @Valid InsertExpenseDTO dto) {
+    public ResponseEntity<Void> insertExpense(@RequestBody @Valid ExpenseRequestDTO dto) {
         Expense expense = mapper.toExpense(dto);
         expenseService.save(expense);
         URI locationUrlHeader = generateLocationHeader(expense.getId());
@@ -34,7 +34,7 @@ public class ExpenseController implements GenericController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<GetExpenseDTO> findById(@PathVariable Long id) {
+    public ResponseEntity<ExpenseResponseDTO> findById(@PathVariable Long id) {
         return expenseService.findById(id)
                 .map(mapper::toGetExpenseDTO)
                 .map(ResponseEntity::ok)
@@ -42,8 +42,8 @@ public class ExpenseController implements GenericController {
     }
 
     @GetMapping
-    public ResponseEntity<List<GetExpenseDTO>> findAll() {
-        List<GetExpenseDTO> expenses = expenseService.findAll()
+    public ResponseEntity<List<ExpenseResponseDTO>> findAll() {
+        List<ExpenseResponseDTO> expenses = expenseService.findAll()
                 .stream()
                 .map(mapper::toGetExpenseDTO)
                 .toList();
@@ -63,7 +63,7 @@ public class ExpenseController implements GenericController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Void> update(@PathVariable Long id, @RequestBody @Valid InsertExpenseDTO dto) {
+    public ResponseEntity<Void> update(@PathVariable Long id, @RequestBody @Valid ExpenseRequestDTO dto) {
         expenseService.update(id, dto);
         return ResponseEntity.noContent().build();
     }

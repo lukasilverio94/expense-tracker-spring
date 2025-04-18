@@ -1,7 +1,7 @@
 package com.dev.lukas.expense_tracker.controllers.mappers;
 
-import com.dev.lukas.expense_tracker.dtos.GetExpenseDTO;
-import com.dev.lukas.expense_tracker.dtos.InsertExpenseDTO;
+import com.dev.lukas.expense_tracker.dtos.ExpenseRequestDTO;
+import com.dev.lukas.expense_tracker.dtos.ExpenseResponseDTO;
 import com.dev.lukas.expense_tracker.models.Expense;
 import com.dev.lukas.expense_tracker.repositories.CategoryRepository;
 import org.mapstruct.Mapper;
@@ -17,9 +17,9 @@ public abstract class ExpenseMapper {
     @Mapping(target = "category",
             expression = "java( categoryRepository.findById(dto.categoryId()).orElse(null) )"
     )
-    public abstract Expense toExpense(InsertExpenseDTO dto);
+    public abstract Expense toExpense(ExpenseRequestDTO dto);
 
     @Mapping(target = "category", source = "category")
-    public abstract GetExpenseDTO toGetExpenseDTO(Expense expense);
+    public abstract ExpenseResponseDTO toGetExpenseDTO(Expense expense);
 
 }
