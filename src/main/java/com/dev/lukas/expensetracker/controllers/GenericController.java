@@ -1,4 +1,4 @@
-package com.dev.lukas.expense_tracker.controllers;
+package com.dev.lukas.expensetracker.controllers;
 
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
