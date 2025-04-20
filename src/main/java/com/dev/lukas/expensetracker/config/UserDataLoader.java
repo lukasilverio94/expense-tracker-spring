@@ -1,7 +1,7 @@
-package com.dev.lukas.expense_tracker.config;
+package com.dev.lukas.expensetracker.config;
 
-import com.dev.lukas.expense_tracker.models.User;
-import com.dev.lukas.expense_tracker.repositories.UserRepository;
+import com.dev.lukas.expensetracker.domain.models.User;
+import com.dev.lukas.expensetracker.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;

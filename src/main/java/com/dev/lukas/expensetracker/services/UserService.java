@@ -1,9 +1,8 @@
-package com.dev.lukas.expense_tracker.services;
+package com.dev.lukas.expensetracker.services;
 
-import com.dev.lukas.expense_tracker.models.User;
-import com.dev.lukas.expense_tracker.repositories.UserRepository;
+import com.dev.lukas.expensetracker.domain.models.User;
+import com.dev.lukas.expensetracker.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
