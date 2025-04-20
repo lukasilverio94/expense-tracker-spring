@@ -1,4 +1,4 @@
-package com.dev.lukas.expense_tracker.models;
+package com.dev.lukas.expensetracker.domain.models;
 
 import jakarta.persistence.*;
 import lombok.Getter;

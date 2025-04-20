@@ -1,6 +1,6 @@
-package com.dev.lukas.expense_tracker.repositories;
+package com.dev.lukas.expensetracker.repositories;
 
-import com.dev.lukas.expense_tracker.models.Expense;
+import com.dev.lukas.expensetracker.domain.models.Expense;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;

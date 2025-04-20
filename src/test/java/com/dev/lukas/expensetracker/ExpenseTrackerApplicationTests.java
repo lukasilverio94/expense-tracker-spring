@@ -1,4 +1,4 @@
-package com.dev.lukas.expense_tracker;
+package com.dev.lukas.expensetracker;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
