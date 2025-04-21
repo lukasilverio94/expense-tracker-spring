@@ -22,20 +22,24 @@ public class ExpenseService {
     private final CategoryRepository categoryRepository;
     private final ExpenseDTOMapper expenseDTOMapper;
 
-    public List<Expense> findAll() {
-        return expenseRepository.findAll();
-    }
-
-    public Optional<Expense> findById(Long id) {
-        return expenseRepository.findById(id);
-    }
-
     public Expense save(ExpenseDTO dto) {
         Category category = categoryRepository.findById(dto.categoryId())
                 .orElseThrow(() -> new RuntimeException("Category not found"));
 
         Expense expense = expenseDTOMapper.toEntity(dto, category);
         return expenseRepository.save(expense);
+    }
+
+    public Optional<ExpenseResponseDTO> findById(Long id) {
+        return expenseRepository.findById(id)
+                .map(expenseDTOMapper::toGetExpenseDTO);
+    }
+
+    public List<ExpenseResponseDTO> findAll() {
+        return expenseRepository.findAll()
+                .stream()
+                .map(expenseDTOMapper::toGetExpenseDTO)
+                .toList();
     }
 
     public void update(Long id, ExpenseDTO dto) {
@@ -61,17 +65,6 @@ public class ExpenseService {
         expenseRepository.deleteAll();
     }
 
-    public Optional<ExpenseResponseDTO> findDtoById(Long id) {
-        return expenseRepository.findById(id)
-                .map(expenseDTOMapper::toGetExpenseDTO);
-    }
-
-    public List<ExpenseResponseDTO> findAllDtos() {
-        return expenseRepository.findAll()
-                .stream()
-                .map(expenseDTOMapper::toGetExpenseDTO)
-                .toList();
-    }
 
 
 }

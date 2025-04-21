@@ -29,12 +29,12 @@ public class ExpenseController implements GenericController {
 
     @GetMapping("/{id}")
     public ResponseEntity<ExpenseResponseDTO> findById(@PathVariable Long id) {
-        return ResponseEntity.of(expenseService.findDtoById(id));
+        return ResponseEntity.of(expenseService.findById(id));
     }
 
     @GetMapping
     public ResponseEntity<List<ExpenseResponseDTO>> findAll() {
-        return ResponseEntity.ok(expenseService.findAllDtos());
+        return ResponseEntity.ok(expenseService.findAll());
     }
 
     @PutMapping("/{id}")
