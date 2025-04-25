@@ -6,6 +6,8 @@ public record ExpenseResponseDTO(
         Long id,
         String description,
         BigDecimal value,
-        CategoryDTO category
+        CategoryDTO category,
+        String createdAt,
+        String updatedAt
 ) {
 }

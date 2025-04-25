@@ -7,7 +7,10 @@ import jakarta.validation.constraints.NotNull;
 import java.math.BigDecimal;
 
 public record ExpenseDTO(
+
         @NotBlank(message = "Description required") String description,
         @NotNull(message = "Value required") BigDecimal value,
-        @NotNull(message = "Category Id required") Long categoryId) {
+        @NotNull(message = "Category Id required") Long categoryId,
+        String createdAt,
+        String updatedAt) {
 }

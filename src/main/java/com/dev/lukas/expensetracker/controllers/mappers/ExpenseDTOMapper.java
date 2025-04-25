@@ -7,17 +7,23 @@ import com.dev.lukas.expensetracker.domain.models.Category;
 import com.dev.lukas.expensetracker.domain.models.Expense;
 import org.springframework.stereotype.Service;
 
+import java.time.format.DateTimeFormatter;
 import java.util.function.Function;
 
 @Service
 public class ExpenseDTOMapper implements Function<Expense, ExpenseDTO> {
+
+    // DateTime formatter
+    private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
 
     @Override
     public ExpenseDTO apply(Expense expense) {
         return new ExpenseDTO(
                 expense.getDescription(),
                 expense.getValue(),
-                expense.getCategory().getId()
+                expense.getCategory().getId(),
+                expense.getCreatedAt().format(formatter),
+                expense.getUpdatedAt().format(formatter)
         );
     }
 
@@ -39,7 +45,9 @@ public class ExpenseDTOMapper implements Function<Expense, ExpenseDTO> {
                 expense.getId(),
                 expense.getDescription(),
                 expense.getValue(),
-                categoryDTO
+                categoryDTO,
+                expense.getCreatedAt().toString(),
+                expense.getUpdatedAt().toString()
         );
     }
 
