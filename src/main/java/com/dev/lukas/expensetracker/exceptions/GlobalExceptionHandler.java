@@ -40,6 +40,12 @@ public class GlobalExceptionHandler extends RuntimeException {
         return ErrorResponse.defaultResponse(e.getMessage());
     }
 
+    @ExceptionHandler(EntityNotFoundException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public ErrorResponse handleEntityNotFoundException(EntityNotFoundException e){
+        return ErrorResponse.defaultResponse(e.getMessage());
+    }
+
     // other unhandled errors
     @ExceptionHandler(RuntimeException.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)

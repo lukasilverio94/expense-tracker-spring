@@ -24,7 +24,7 @@ public class ExpenseService {
 
     public Expense save(ExpenseDTO dto) {
         Category category = categoryRepository.findById(dto.categoryId())
-                .orElseThrow(() -> new RuntimeException("Category not found"));
+                .orElseThrow(() -> new EntityNotFoundException("Category not found"));
 
         Expense expense = expenseDTOMapper.toEntity(dto, category);
         return expenseRepository.save(expense);
@@ -64,7 +64,6 @@ public class ExpenseService {
     public void deleteAll(){
         expenseRepository.deleteAll();
     }
-
 
 
 }
