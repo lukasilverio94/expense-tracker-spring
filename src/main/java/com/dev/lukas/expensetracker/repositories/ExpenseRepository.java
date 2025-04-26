@@ -8,4 +8,6 @@ import java.util.List;
 public interface ExpenseRepository extends JpaRepository<Expense, Long> {
 
     List<Expense> findByDescription(String description);
+
+    List<Expense> findAllByOrderByCreatedAtDesc();
 }

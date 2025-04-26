@@ -36,7 +36,7 @@ public class ExpenseService {
     }
 
     public List<ExpenseResponseDTO> findAll() {
-        return expenseRepository.findAll()
+        return expenseRepository.findAllByOrderByCreatedAtDesc()
                 .stream()
                 .map(expenseDTOMapper::toGetExpenseDTO)
                 .toList();
