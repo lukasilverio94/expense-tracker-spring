@@ -46,8 +46,8 @@ public class ExpenseDTOMapper implements Function<Expense, ExpenseDTO> {
                 expense.getDescription(),
                 expense.getValue(),
                 categoryDTO,
-                expense.getCreatedAt().toString(),
-                expense.getUpdatedAt().toString()
+                expense.getCreatedAt().format(formatter),
+                expense.getUpdatedAt().format(formatter)
         );
     }
 
