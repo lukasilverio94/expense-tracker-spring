@@ -2,6 +2,7 @@ package com.dev.lukas.expensetracker.exceptions;
 
 import com.dev.lukas.expensetracker.domain.dtos.ErrorField;
 import com.dev.lukas.expensetracker.domain.dtos.ErrorResponse;
+import com.dev.lukas.expensetracker.domain.models.Category;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -12,7 +13,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import java.util.List;
 
 @RestControllerAdvice
-public class GlobalExceptionHandler extends RuntimeException {
+public class GlobalExceptionHandler {
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     @ResponseStatus(HttpStatus.UNPROCESSABLE_ENTITY)
@@ -31,6 +32,12 @@ public class GlobalExceptionHandler extends RuntimeException {
     @ExceptionHandler(DuplicatedRecordException.class)
     @ResponseStatus(HttpStatus.CONFLICT)
     public ErrorResponse handleDuplicatedRecordException(DuplicatedRecordException e) {
+        return ErrorResponse.conflict(e.getMessage());
+    }
+
+    @ExceptionHandler(CategoryExistsException.class)
+    @ResponseStatus(HttpStatus.CONFLICT)
+    public ErrorResponse handleCategoryExistsException(CategoryExistsException e){
         return ErrorResponse.conflict(e.getMessage());
     }
 

@@ -2,6 +2,7 @@ package com.dev.lukas.expensetracker.controllers;
 
 import com.dev.lukas.expensetracker.domain.dtos.CategoryDTO;
 import com.dev.lukas.expensetracker.services.CategoryService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -17,7 +18,7 @@ public class CategoryController implements GenericController {
     private final CategoryService service;
 
     @PostMapping
-    public ResponseEntity<Void> save(@RequestBody CategoryDTO dto) {
+    public ResponseEntity<Void> save(@RequestBody @Valid CategoryDTO dto) {
         service.save(dto);
         URI locationHeader = generateLocationHeader(dto.id());
         return ResponseEntity.created(locationHeader).build();
@@ -38,7 +39,7 @@ public class CategoryController implements GenericController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<CategoryDTO> update(@PathVariable Long id, @RequestBody CategoryDTO dto) {
+    public ResponseEntity<CategoryDTO> update(@PathVariable Long id, @RequestBody @Valid CategoryDTO dto) {
         CategoryDTO updatedCategoryDto = service.update(id, dto);
         if (updatedCategoryDto != null){
             return ResponseEntity.noContent().build();

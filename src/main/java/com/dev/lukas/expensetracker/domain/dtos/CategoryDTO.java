@@ -1,4 +1,9 @@
 package com.dev.lukas.expensetracker.domain.dtos;
 
-public record CategoryDTO(Long id, String name) {
+import jakarta.validation.constraints.NotNull;
+
+public record CategoryDTO(
+        Long id,
+        @NotNull(message = "Category name is required")
+        String name) {
 }
