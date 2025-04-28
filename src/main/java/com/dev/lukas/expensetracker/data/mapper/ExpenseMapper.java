@@ -23,7 +23,7 @@ public class ExpenseMapper {
                 entity.getId(),
                 entity.getDescription(),
                 entity.getValue(),
-                entity.getCategory().getId()pq
+                entity.getCategory().getId()
         );
     }
 
