@@ -24,4 +24,6 @@ public class Category {
     @JsonIgnore
     private List<Expense> expenses;
 
+    public Category(Long id, String name) {
+    }
 }

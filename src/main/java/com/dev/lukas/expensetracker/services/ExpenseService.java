@@ -3,6 +3,8 @@ package com.dev.lukas.expensetracker.services;
 import java.util.List;
 import java.util.Optional;
 
+import com.dev.lukas.expensetracker.data.dtos.ExpenseDto;
+import com.dev.lukas.expensetracker.data.mapper.ExpenseMapper;
 import com.dev.lukas.expensetracker.data.model.ExpenseRequestModel;
 import com.dev.lukas.expensetracker.data.entity.Category;
 import com.dev.lukas.expensetracker.repositories.CategoryRepository;
@@ -21,6 +23,7 @@ public class ExpenseService {
     private final ExpenseRepository expenseRepository;
 
     private final CategoryRepository categoryRepository;
+    private final ExpenseMapper expenseMapper;
 
     public List<Expense> findAll() {
         return expenseRepository.findAll();
@@ -30,12 +33,13 @@ public class ExpenseService {
         return expenseRepository.findById(id);
     }
 
-    public Expense save(Expense expense) {
+    public Expense save(ExpenseDto expense) {
         Category category = categoryRepository.findById(expense.getCategory().getId())
                 .orElseThrow(() -> new RuntimeException("Category not found"));
 
         expense.setCategory(category);
-        return expenseRepository.save(expense);
+        Expense newExpense = this.expenseMapper.dtoToEntity(expense);
+        return expenseRepository.save(newExpense);
     }
 
     public Expense update(Long id, ExpenseRequestModel dto) {

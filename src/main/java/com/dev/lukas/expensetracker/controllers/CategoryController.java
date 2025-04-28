@@ -24,7 +24,7 @@ public class CategoryController implements GenericController {
     public ResponseEntity<Void> save(@RequestBody CategoryRequestModel model) {
         var dto = this.mapper.modelToDto(model);
         this.service.save(dto);
-        URI locationHeader = generateLocationHeader(dto.getId());
+        URI locationHeader = generateLocationHeader(dto.id());
         return ResponseEntity.created(locationHeader).build();
     }
 
@@ -49,7 +49,6 @@ public class CategoryController implements GenericController {
     @PutMapping("/{id}")
     public ResponseEntity<CategoryResponseModel> update(@PathVariable Long id, @RequestBody CategoryRequestModel model) {
         var dto = this.mapper.modelToDto(model);
-        dto.setId(id);
 
         CategoryDto updatedCategoryDto = this.service.update(dto);
         if (updatedCategoryDto != null) {

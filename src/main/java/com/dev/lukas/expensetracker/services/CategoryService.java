@@ -37,14 +37,14 @@ public class CategoryService {
     }
 
     public CategoryDto update(CategoryDto dto) {
-       Optional<Category> existingCategoryOptional = repository.findById(dto.getId());
+       Optional<Category> existingCategoryOptional = repository.findById(dto.id());
        if(existingCategoryOptional.isEmpty()){
            // lançar exceção e tratar no exception handler
            return null;
        }
 
        Category existingCategory = existingCategoryOptional.get();
-       existingCategory.setName(dto.getName());
+       existingCategory.setName(dto.name());
 
        Category updatedCategory = this.repository.save(existingCategory);
        return this.categoryMapper.entityToDto(updatedCategory);

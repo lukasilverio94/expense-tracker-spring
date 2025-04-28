@@ -27,8 +27,8 @@ public class ExpenseController implements GenericController {
 
 
     @PostMapping
-    public ResponseEntity<Void> insertExpense(@RequestBody @Valid ExpenseRequestModel dto) {
-        ExpenseDto expense = this.mapper.toExpense(dto);
+    public ResponseEntity<Void> insertExpense(@RequestBody @Valid ExpenseRequestModel model) {
+        ExpenseDto expense = this.mapper.modelToDto(model);
         expenseService.save(expense);
         URI locationUrlHeader = generateLocationHeader(expense.getId());
         return ResponseEntity.created(locationUrlHeader).build();
@@ -37,7 +37,7 @@ public class ExpenseController implements GenericController {
     @GetMapping("/{id}")
     public ResponseEntity<ExpenseResponseModel> findById(@PathVariable Long id) {
         return expenseService.findById(id)
-                .map(mapper::toGetExpenseDTO)
+                .map(mapper::entityToDto)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }

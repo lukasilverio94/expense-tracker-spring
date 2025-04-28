@@ -10,19 +10,25 @@ import org.springframework.stereotype.Component;
 public class CategoryMapper {
 
     public Category dtoToEntity(CategoryDto dto) {
-        return null;
+        return new Category(dto.id(), dto.name());
     }
 
     public CategoryDto entityToDto(Category entity) {
-        return null;
+        return new CategoryDto(
+                entity.getId(),
+                entity.getName()
+        );
     }
 
     public CategoryDto modelToDto(CategoryRequestModel dto) {
-        return null;
+        return new CategoryDto(
+                dto.id(),
+                dto.name()
+        );
     }
 
     public CategoryResponseModel dtoToModel(CategoryDto dto) {
-        return null;
+        return new CategoryResponseModel(dto.name());
     }
 
 }
