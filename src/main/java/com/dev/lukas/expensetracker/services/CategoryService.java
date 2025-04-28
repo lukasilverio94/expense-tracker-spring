@@ -20,10 +20,10 @@ public class CategoryService {
     private final CategoryDTOMapper categoryDTOMapper;
 
     public void save(CategoryDTO dto) {
-        Optional<Category> existingCategory = repository.findByName(dto.name());
+        Optional<Category> existingCategory = repository.findByNameIgnoreCase(dto.name());
 
         if (existingCategory.isPresent()){
-            throw new CategoryExistsException("Category " + dto.name() + " already exists!");
+            throw new CategoryExistsException("Category " + dto.name().toLowerCase() + " already exists!");
         }
 
         Category newCategory = new Category();
@@ -45,7 +45,7 @@ public class CategoryService {
        Category existingCategory = repository.findById(id)
                .orElseThrow(() -> new EntityNotFoundException("Category not found"));
 
-       Optional<Category> categoryWithSameName = repository.findByName(dto.name());
+       Optional<Category> categoryWithSameName = repository.findByNameIgnoreCase(dto.name());
 
        if (categoryWithSameName.isPresent() && !categoryWithSameName.get().getId().equals(id)){
            throw new CategoryExistsException("Category with name " + dto.name() + " already exists");
