@@ -22,12 +22,13 @@ public class ExpenseService {
     private final CategoryRepository categoryRepository;
     private final ExpenseDTOMapper expenseDTOMapper;
 
-    public Expense save(ExpenseDTO dto) {
+    public ExpenseResponseDTO save(ExpenseDTO dto) {
         Category category = categoryRepository.findById(dto.categoryId())
                 .orElseThrow(() -> new EntityNotFoundException("Category not found"));
 
         Expense expense = expenseDTOMapper.toEntity(dto, category);
-        return expenseRepository.save(expense);
+        Expense savedExpense = expenseRepository.save(expense);
+        return expenseDTOMapper.toGetExpenseDTO(savedExpense);
     }
 
     public Optional<ExpenseResponseDTO> findById(Long id) {

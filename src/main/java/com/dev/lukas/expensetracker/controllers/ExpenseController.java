@@ -22,7 +22,7 @@ public class ExpenseController implements GenericController {
 
     @PostMapping
     public ResponseEntity<Void> insertExpense(@RequestBody @Valid ExpenseDTO dto) {
-        Long newId = expenseService.save(dto).getId();
+        Long newId = expenseService.save(dto).id();
         URI location = generateLocationHeader(newId);
         return ResponseEntity.created(location).build();
     }

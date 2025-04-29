@@ -18,10 +18,10 @@ public class CategoryController implements GenericController {
     private final CategoryService service;
 
     @PostMapping
-    public ResponseEntity<Void> save(@RequestBody @Valid CategoryDTO dto) {
-        service.save(dto);
+    public ResponseEntity<CategoryDTO> save(@RequestBody @Valid CategoryDTO dto) {
+        CategoryDTO newCategory = service.save(dto);
         URI locationHeader = generateLocationHeader(dto.id());
-        return ResponseEntity.created(locationHeader).build();
+        return ResponseEntity.created(locationHeader).body(newCategory);
     }
 
     @GetMapping("/{id}")
@@ -42,7 +42,7 @@ public class CategoryController implements GenericController {
     public ResponseEntity<CategoryDTO> update(@PathVariable Long id, @RequestBody @Valid CategoryDTO dto) {
         CategoryDTO updatedCategoryDto = service.update(id, dto);
         if (updatedCategoryDto != null){
-            return ResponseEntity.noContent().build();
+            return ResponseEntity.ok().body(updatedCategoryDto);
         }
         return ResponseEntity.notFound().build();
     }

@@ -19,7 +19,7 @@ public class CategoryService {
     private final CategoryRepository repository;
     private final CategoryDTOMapper categoryDTOMapper;
 
-    public void save(CategoryDTO dto) {
+    public CategoryDTO save(CategoryDTO dto) {
         Optional<Category> existingCategory = repository.findByNameIgnoreCase(dto.name());
 
         if (existingCategory.isPresent()){
@@ -28,7 +28,9 @@ public class CategoryService {
 
         Category newCategory = new Category();
         newCategory.setName(dto.name());
-        repository.save(newCategory);
+        Category savedCategory = repository.save(newCategory);
+
+        return categoryDTOMapper.apply(savedCategory);
     }
 
     public Optional<CategoryDTO> findById(Long id) {
