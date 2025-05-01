@@ -9,12 +9,15 @@ import com.dev.lukas.expensetracker.repositories.CategoryRepository;
 import com.dev.lukas.expensetracker.repositories.ExpenseRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.List;
 import java.util.Optional;
+
+import static com.dev.lukas.expensetracker.repositories.specs.ExpenseSpecifications.descriptionLike;
 
 @Service
 @RequiredArgsConstructor
@@ -36,6 +39,18 @@ public class ExpenseService {
     public Optional<ExpenseResponseDTO> findById(Long id) {
         return expenseRepository.findById(id)
                 .map(expenseDTOMapper::toGetExpenseDTO);
+    }
+
+    public List<Expense> searchExpenses(String description){
+
+        Specification<Expense> specs = Specification
+                .where((root, query, cb) -> cb.conjunction());
+
+        if (description != null){
+            specs = specs.and(descriptionLike(description));
+        }
+
+        return expenseRepository.findAll(specs);
     }
 
     public List<ExpenseResponseDTO> findAll() {

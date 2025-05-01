@@ -1,5 +1,6 @@
 package com.dev.lukas.expensetracker.controllers;
 
+import com.dev.lukas.expensetracker.controllers.mappers.ExpenseDTOMapper;
 import com.dev.lukas.expensetracker.domain.dtos.ExpenseDTO;
 import com.dev.lukas.expensetracker.domain.dtos.ExpenseResponseDTO;
 import com.dev.lukas.expensetracker.domain.dtos.TotalExpensesDTO;
@@ -20,6 +21,8 @@ public class ExpenseController implements GenericController {
 
     private final ExpenseService expenseService;
 
+    private final ExpenseDTOMapper mapper;
+
     @PostMapping
     public ResponseEntity<Void> insertExpense(@RequestBody @Valid ExpenseDTO dto) {
         Long newId = expenseService.save(dto).id();
@@ -33,9 +36,21 @@ public class ExpenseController implements GenericController {
     }
 
     @GetMapping
-    public ResponseEntity<List<ExpenseResponseDTO>> findAll() {
-        return ResponseEntity.ok(expenseService.findAll());
+    public ResponseEntity<List<ExpenseResponseDTO>> search(@RequestParam(value = "description", required = false) String description) {
+        var result = expenseService.searchExpenses(description);
+        var list = result
+                .stream()
+                .map(mapper::toGetExpenseDTO)
+                .toList();
+
+        return ResponseEntity.ok(list);
     }
+
+
+//    @GetMapping
+//    public ResponseEntity<List<ExpenseResponseDTO>> findAll() {
+//        return ResponseEntity.ok(expenseService.findAll());
+//    }
 
     @PutMapping("/{id}")
     public ResponseEntity<Void> update(@PathVariable Long id, @RequestBody @Valid ExpenseDTO dto) {
