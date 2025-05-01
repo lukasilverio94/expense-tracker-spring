@@ -2,14 +2,14 @@ package com.dev.lukas.expensetracker.controllers;
 
 import com.dev.lukas.expensetracker.domain.dtos.ExpenseDTO;
 import com.dev.lukas.expensetracker.domain.dtos.ExpenseResponseDTO;
+import com.dev.lukas.expensetracker.domain.dtos.TotalExpensesDTO;
 import com.dev.lukas.expensetracker.services.ExpenseService;
-
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-
+import java.math.BigDecimal;
 import java.net.URI;
 import java.util.List;
 
@@ -53,6 +53,12 @@ public class ExpenseController implements GenericController {
     public ResponseEntity<Void> deleteAll() {
         expenseService.deleteAll();
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/total")
+    public ResponseEntity<TotalExpensesDTO> getTotalSumExpenses(){
+        BigDecimal total = expenseService.getTotalSumExpenses();
+        return ResponseEntity.ok(new TotalExpensesDTO(total != null ? total : BigDecimal.ZERO));
     }
 
 }
