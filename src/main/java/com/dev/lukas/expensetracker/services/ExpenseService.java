@@ -9,6 +9,7 @@ import com.dev.lukas.expensetracker.repositories.CategoryRepository;
 import com.dev.lukas.expensetracker.repositories.ExpenseRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
@@ -50,7 +51,7 @@ public class ExpenseService {
             specs = specs.and(descriptionLike(description));
         }
 
-        return expenseRepository.findAll(specs);
+        return expenseRepository.findAll(specs, Sort.by(Sort.Direction.DESC, "createdAt"));
     }
 
     public List<ExpenseResponseDTO> findAll() {
