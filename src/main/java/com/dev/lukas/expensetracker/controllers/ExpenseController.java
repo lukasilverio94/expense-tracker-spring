@@ -46,12 +46,6 @@ public class ExpenseController implements GenericController {
         return ResponseEntity.ok(list);
     }
 
-
-//    @GetMapping
-//    public ResponseEntity<List<ExpenseResponseDTO>> findAll() {
-//        return ResponseEntity.ok(expenseService.findAll());
-//    }
-
     @PutMapping("/{id}")
     public ResponseEntity<Void> update(@PathVariable Long id, @RequestBody @Valid ExpenseDTO dto) {
         expenseService.update(id, dto);
