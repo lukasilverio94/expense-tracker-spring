@@ -58,7 +58,7 @@ public class ExpenseController implements GenericController {
     @GetMapping("/total")
     public ResponseEntity<TotalExpensesDTO> getTotalSumExpenses(){
         BigDecimal total = expenseService.getTotalSumExpenses();
-        return ResponseEntity.ok(new TotalExpensesDTO(total != null ? total : BigDecimal.ZERO));
+        return ResponseEntity.ok(new TotalExpensesDTO(total));
     }
 
 }

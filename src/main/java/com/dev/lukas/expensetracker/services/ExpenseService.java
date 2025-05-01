@@ -12,6 +12,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.List;
 import java.util.Optional;
 
@@ -68,8 +69,8 @@ public class ExpenseService {
     }
 
     public BigDecimal getTotalSumExpenses(){
-        return expenseRepository.findTotalExpenses();
+        BigDecimal total = expenseRepository.findTotalExpenses();
+        return (total != null ? total : BigDecimal.ZERO).setScale(2, RoundingMode.HALF_UP);
     }
-
 
 }
