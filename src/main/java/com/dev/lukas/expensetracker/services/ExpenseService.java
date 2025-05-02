@@ -54,12 +54,6 @@ public class ExpenseService {
         return expenseRepository.findAll(specs, Sort.by(Sort.Direction.DESC, "createdAt"));
     }
 
-    public List<ExpenseResponseDTO> findAll() {
-        return expenseRepository.findAllByOrderByCreatedAtDesc()
-                .stream()
-                .map(expenseDTOMapper::toGetExpenseDTO)
-                .toList();
-    }
 
     public void update(Long id, ExpenseDTO dto) {
         Expense existingExpense = expenseRepository.findById(id)
