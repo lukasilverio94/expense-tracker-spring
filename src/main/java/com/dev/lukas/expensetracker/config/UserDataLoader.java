@@ -2,7 +2,6 @@ package com.dev.lukas.expensetracker.config;
 
 import com.dev.lukas.expensetracker.domain.models.User;
 import com.dev.lukas.expensetracker.repositories.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
@@ -10,8 +9,12 @@ import java.util.Arrays;
 
 @Component
 public class UserDataLoader implements CommandLineRunner {
-    @Autowired
-    private UserRepository userRepository;
+
+    private final UserRepository userRepository;
+
+    public UserDataLoader(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
 
     @Override
     public void run(String... args) {

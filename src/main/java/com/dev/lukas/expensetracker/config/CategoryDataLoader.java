@@ -2,7 +2,6 @@ package com.dev.lukas.expensetracker.config;
 
 import com.dev.lukas.expensetracker.domain.models.Category;
 import com.dev.lukas.expensetracker.repositories.CategoryRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
@@ -10,8 +9,12 @@ import java.util.Arrays;
 
 @Component
 public class CategoryDataLoader implements CommandLineRunner {
-    @Autowired
-    CategoryRepository categoryRepository;
+
+    private final CategoryRepository categoryRepository;
+
+    public CategoryDataLoader(CategoryRepository categoryRepository) {
+        this.categoryRepository = categoryRepository;
+    }
 
     @Override
     public void run(String... args) {
