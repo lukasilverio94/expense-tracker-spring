@@ -18,6 +18,7 @@ import java.math.RoundingMode;
 import java.util.List;
 import java.util.Optional;
 
+import static com.dev.lukas.expensetracker.repositories.specs.ExpenseSpecifications.categoryEquals;
 import static com.dev.lukas.expensetracker.repositories.specs.ExpenseSpecifications.descriptionLike;
 
 @Service
@@ -42,13 +43,17 @@ public class ExpenseService {
                 .map(expenseDTOMapper::toGetExpenseDTO);
     }
 
-    public List<Expense> searchExpenses(String description){
+    public List<Expense> searchExpenses(String description, String categoryName){
 
         Specification<Expense> specs = Specification
                 .where((root, query, cb) -> cb.conjunction());
 
         if (description != null){
             specs = specs.and(descriptionLike(description));
+        }
+
+        if (categoryName != null) {
+            specs = specs.and(categoryEquals(categoryName));
         }
 
         return expenseRepository.findAll(specs, Sort.by(Sort.Direction.DESC, "createdAt"));

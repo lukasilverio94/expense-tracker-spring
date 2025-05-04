@@ -36,8 +36,10 @@ public class ExpenseController implements GenericController {
     }
 
     @GetMapping
-    public ResponseEntity<List<ExpenseResponseDTO>> search(@RequestParam(value = "description", required = false) String description) {
-        var result = expenseService.searchExpenses(description);
+    public ResponseEntity<List<ExpenseResponseDTO>> search(
+            @RequestParam(value = "description", required = false) String description,
+            @RequestParam(value = "category", required = false)String categoryName) {
+        var result = expenseService.searchExpenses(description, categoryName);
         var list = result
                 .stream()
                 .map(mapper::toGetExpenseDTO)

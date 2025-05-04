@@ -10,4 +10,8 @@ public class ExpenseSpecifications {
                 (root, query, cb)
                         -> cb.like(cb.lower(root.get("description")), "%" + description.toLowerCase() + "%");
     }
+
+    public static Specification<Expense> categoryEquals(String categoryName) {
+        return (root, query, cb) -> cb.equal(root.get("category").get("name"), categoryName);
+    }
 }
