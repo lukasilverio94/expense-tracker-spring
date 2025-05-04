@@ -2,6 +2,8 @@ package com.dev.lukas.expensetracker.domain.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -11,6 +13,8 @@ import java.util.List;
 @Table(name = "categories")
 @Data
 @NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class Category {
 
     @Id
@@ -24,9 +28,8 @@ public class Category {
     @JsonIgnore
     private List<Expense> expenses;
 
-    public Category(String name){
+    public Category(String name) {
         this.name = name;
     }
-
 
 }
